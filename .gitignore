@@ -1,3 +1,6 @@
+# Diese Datei verbietet Datein die auf GitHub Hochgeladen werden, bspw nützlich bei Datein, welche nur kurzfristig benötigt werden oder nur von deinem speziellen Gerät.
+# Du kannst erkennen, ob Datein nicht mit hochgeladen werden, wenn deren Name links im Datei Explorer Grau ist.
+
 # Logs
 logs
 *.log
@@ -132,5 +135,3 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-public/sitemap.xml

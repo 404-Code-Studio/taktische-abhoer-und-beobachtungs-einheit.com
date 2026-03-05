@@ -2,6 +2,7 @@
     "_comment": "Diese Datei ist dazu da, um express Routen zu `Mappen`. Also Argument 1 z.b. `/` ist die URL. Also /. Das zweite Argument bspw `index.html` ist die Datei die aus /public/ benutzt werden solll.",
 
     "/": "index.html",
+    "/basics": "index.html",
     "/index.html": "index.html",
     "/technical": "technical.html",
     "/technical.html": "technical.html",
