@@ -1,3 +1,8 @@
+/*
+Dise Date ist unser Webserver. Er ist dazu da, das die HTML Datein etc vom Browser aus ereichbar sind.
+In JavaScript geschrieben. We love JS.
+*/
+
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
@@ -7,7 +12,10 @@ const app = express();
 const DOMAIN="taktische-abhoer-und-beobachtungs-einheit.com"
 const DEBUG = process.argv.includes('debug');
 app.use(express.json());
-const routes = JSON.parse(fs.readFileSync('routes.json', 'utf8'));
+const routesRaw = JSON.parse(fs.readFileSync('routes.json', 'utf8'));
+const routes = Object.fromEntries(
+  Object.entries(routesRaw).filter(([key]) => key !== '_comment')
+);
 const cache = {};
 
 for (const [route, file] of Object.entries(routes)) {

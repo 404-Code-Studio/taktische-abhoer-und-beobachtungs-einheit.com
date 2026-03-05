@@ -1,3 +1,17 @@
+/*
+Diese Datei bestimmt das aussehen, wie Farbe oder Textgröße.
+
+body {} ändert alle HTML Elemente namens body
+z.b. wenn du standardmäßig einem Element eine Farbe geben möchtest. Bspw alle body`s, egal welche Klasse, oder ID.
+
+#body {} ändert alle HTML Elemente mit der id "body"
+Das Problem ist, eine ID kann nur einmal vorkommen. 
+
+.body {} ändert alle HTML Elemente mit der Klasse "body".
+Klassen kannst du beliebig oft wieder verwenden.
+*/
+
+
 body {
     font-family: Arial, sans-serif;
     max-width: 800px;

@@ -1,3 +1,6 @@
+[//]: # (Diese Datei ist eine sogennante Readme. Sie soll unser Projekt beschreiben. Geschrieben in Markdown Sprache)
+
+
 # 🕊️ Taktische Abhör- und Beobachtungs-Einheit (TAUBE)
 
 > *"Die Regierung hat eine Abhöreinheit... und sie heißt Taube"* 🕊️
