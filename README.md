@@ -1,4 +1,4 @@
-[//]: # (Diese Datei ist eine sogennante Readme. Sie soll unser Projekt beschreiben. Geschrieben in Markdown Sprache)
+[//]: # (Diese Datei ist eine sogennante Readme. Sie soll unser Projekt beschreiben. Geschrieben in Markdown Sprache. Zum updaten bitte: git pull im terminal eingeben!)
 
 
 # 🕊️ Taktische Abhör- und Beobachtungs-Einheit (TAUBE)
