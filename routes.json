@@ -1,4 +1,9 @@
 {
   "/": "index.html",
-  "/sitemap.xml": "/sitemap.xml"
+  "/basics": "index.html",
+  "/technical": "technical.html",
+  "/hubs": "hubs.html",
+  "/sitemap.xml": "/sitemap.xml",
+  "/styles.css": "styles.css",
+  "/scripts.js": "scripts.js"
 }

@@ -5,24 +5,35 @@ import fs from 'fs';
 
 const app = express();
 const DOMAIN="taktische-abhoer-und-beobachtungs-einheit.com"
+const DEBUG = process.argv.includes('debug');
 app.use(express.json());
 const routes = JSON.parse(fs.readFileSync('routes.json', 'utf8'));
 const cache = {};
 
 for (const [route, file] of Object.entries(routes)) {
   const filePath = path.join('public', file);
-  const content = fs.readFileSync(filePath);
   let type;
   if (file.endsWith('.html')) type = 'text/html';
   else if (file.endsWith('.xml')) type = 'text/xml';
+  else if (file.endsWith('.css')) type = 'text/css';
+  else if (file.endsWith('.js')) type = 'application/javascript';
   else type = 'text/plain';
-  cache[route] = { content, type };
+  if (!DEBUG) {
+    const content = fs.readFileSync(filePath);
+    cache[route] = { content, type };
+  } else {
+    cache[route] = { filePath, type };
+  }
 }
 
 for (const [route, file] of Object.entries(routes)) {
   app.get(route, (req, res) => {
-    const cached = cache[route];
-    res.set('Cache-Control', `public, max-age=${process.env.EXPRESS_PORT || 31536000}`);
+    let cached = cache[route];
+    if (DEBUG) {
+      cached = { content: fs.readFileSync(cached.filePath), type: cached.type };
+    }
+    const cacheAge = DEBUG ? 0 : 31536000;
+    res.set('Cache-Control', `public, max-age=${cacheAge}`);
     res.type(cached.type).send(cached.content);
   });
 }
