@@ -1,0 +1,27 @@
+{
+  "name": "taktische-abhoer-und-beobachtungs-einheit.com",
+  "version": "1.0.0",
+  "description": "> *\"Die Regierung hat eine Abhöreinheit... und sie heißt Taube\"* 🕊️",
+  "keywords": [
+    "taube"
+  ],
+  "homepage": "https://github.com/404-Code-Studio/taktische-abhoer-und-beobachtungs-einheit.com#readme",
+  "bugs": {
+    "url": "https://github.com/404-Code-Studio/taktische-abhoer-und-beobachtungs-einheit.com/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/404-Code-Studio/taktische-abhoer-und-beobachtungs-einheit.com.git"
+  },
+  "license": "ISC",
+  "author": "SerafinoBarwinski, Dinkelbrot",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js debug"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  }
+}
