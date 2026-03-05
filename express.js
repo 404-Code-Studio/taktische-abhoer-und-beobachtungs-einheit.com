@@ -2,12 +2,11 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 
+
 const app = express();
-
+const DOMAIN="taktische-abhoer-und-beobachtungs-einheit.com"
 app.use(express.json());
-
 const routes = JSON.parse(fs.readFileSync('routes.json', 'utf8'));
-
 const cache = {};
 
 for (const [route, file] of Object.entries(routes)) {
@@ -23,13 +22,14 @@ for (const [route, file] of Object.entries(routes)) {
 for (const [route, file] of Object.entries(routes)) {
   app.get(route, (req, res) => {
     const cached = cache[route];
-    res.set('Cache-Control', 'public, max-age=31536000');
+    res.set('Cache-Control', `public, max-age=${process.env.EXPRESS_PORT || 31536000}`);
     res.type(cached.type).send(cached.content);
   });
 }
 
-const PORT = process.env.EXPRESS_PORT || 3000;
-const baseUrl = `http://localhost:${PORT}`;
+//const PORT = process.env.EXPRESS_PORT || 3000;
+
+const baseUrl = `https://${DOMAIN}:80`;
 let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 for (const route of Object.keys(routes)) {
   const filePath = path.join('public', routes[route]);
