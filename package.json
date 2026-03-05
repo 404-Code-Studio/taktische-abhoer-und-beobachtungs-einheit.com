@@ -14,7 +14,7 @@
     "url": "git+https://github.com/404-Code-Studio/taktische-abhoer-und-beobachtungs-einheit.com.git"
   },
   "license": "ISC",
-  "author": "SerafinoBarwinski, Dinkelbrot",
+  "author": "CEO, Dinkelbrot",
   "type": "module",
   "main": "server.js",
   "scripts": {
