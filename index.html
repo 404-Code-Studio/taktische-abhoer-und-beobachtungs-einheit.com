@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T.A.U.B.E. – Taktische Abhör- und Beobachtungs-Einheit</title>
+  <meta name="description" content="T.A.U.B.E. – Die offizielle Behörde für strategische Taubenüberwachung. Warnung: Reden Sie nicht über Politik in der Nähe von Tauben." />
+  <meta name="keywords" content="T.A.U.B.E, Tauben, Abhör-Einheit, Satire" />
+  <meta name="author" content="Serafino Barwinski" />
+  <meta name="theme-color" content="#0a0c0a" />
+  <meta name="generator" content="T.A.U.B.E. Internal System v2.4.7" />
+
+  <link rel="canonical" href="https://taktische-abhoer-und-beobachtungs-einheit.com/" />
+
+  <!-- Ja, es ist teilweise Vibe Coded, wir hatten keine Zeit -->
+  <link href="/fonts/css?url=https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0c0a;
+      --bg2: #0e110e;
+      --green: #39ff14;
+      --green-dim: #1a7a07;
+      --green-faint: #0d3d04;
+      --red: #ff2222;
+      --amber: #ffb703;
+      --text: #c8d8c0;
+      --text-dim: #6a8060;
+      --border: #1e3a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Sans 3', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* Scanlines overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.15) 2px,
+        rgba(0,0,0,0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Noise grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,12,10,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+
+    .nav-logo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.1em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--green);
+      text-shadow: 0 0 8px var(--green);
+    }
+
+    /* ALERT BANNER */
+    .alert-banner {
+      background: var(--red);
+      color: #fff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.5rem 1rem;
+      text-align: center;
+      letter-spacing: 0.2em;
+      animation: blink-bg 2s infinite;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .alert-banner span {
+      display: inline-block;
+      animation: scroll-text 20s linear infinite;
+    }
+
+    @keyframes scroll-text {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    @keyframes blink-bg {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+
+    /* PAGES */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* HERO */
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      position: relative;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-emblem {
+      font-size: 8rem;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 20px rgba(57,255,20,0.3));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .classified-stamp {
+      position: absolute;
+      top: 3rem;
+      right: 3rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--red);
+      border: 4px solid var(--red);
+      padding: 0.2rem 0.8rem;
+      transform: rotate(-15deg);
+      opacity: 0.7;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 10px var(--red);
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      letter-spacing: 0.05em;
+      line-height: 0.9;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(57,255,20,0.2);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 .tabe {
+      color: var(--green);
+      text-shadow: 0 0 20px var(--green), 0 0 40px rgba(57,255,20,0.3);
+    }
+
+    .hero-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+
+    .hero-warning {
+      background: rgba(255,34,34,0.1);
+      border: 1px solid var(--red);
+      border-left: 4px solid var(--red);
+      padding: 1.2rem 2rem;
+      max-width: 600px;
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-warning .warn-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--red);
+      letter-spacing: 0.3em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-warning p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* MAIN CONTENT */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--green);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--green-faint);
+    }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* INFO CARDS */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--green-dim);
+      transform: translateY(-2px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--green-dim);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.05em;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    /* WARNING BOXES */
+    .warn-box {
+      background: rgba(255,183,3,0.08);
+      border: 1px solid var(--amber);
+      border-left: 4px solid var(--amber);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .warn-box .warn-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--amber);
+      letter-spacing: 0.3em;
+      margin-bottom: 0.6rem;
+    }
+
+    .warn-box p {
+      font-size: 1rem;
+      color: #fff;
+      line-height: 1.7;
+    }
+
+    /* PIGEON PROFILE */
+    .pigeon-profile {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: 2rem;
+    }
+
+    .pigeon-avatar {
+      font-size: 5rem;
+      text-align: center;
+      filter: drop-shadow(0 0 10px rgba(57,255,20,0.2));
+    }
+
+    .pigeon-data table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .pigeon-data td {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--green-faint);
+    }
+
+    .pigeon-data td:first-child {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    .pigeon-data td:last-child {
+      color: var(--text);
+    }
+
+    .status-active {
+      color: var(--green) !important;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* RULES SECTION */
+    .rules-list {
+      list-style: none;
+      margin-bottom: 3rem;
+    }
+
+    .rules-list li {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .rules-list li:last-child { border-bottom: none; }
+
+    .rule-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      background: var(--green-faint);
+      padding: 0.2rem 0.5rem;
+      height: fit-content;
+      white-space: nowrap;
+    }
+
+    /* CONTACT PAGE */
+    .contact-hero {
+      padding: 4rem 2rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-hero p {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      margin-top: 0.5rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    .contact-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--green-dim);
+    }
+
+    .contact-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-card h3 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-card .handle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--green);
+    }
+
+    .contact-card .handle a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .contact-card .handle a:hover {
+      text-shadow: 0 0 8px var(--green);
+    }
+
+    .contact-card .name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-card .role {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+    }
+
+    /* ADD YOUR OWN AGENTS placeholder */
+    .add-agent {
+      border-style: dashed !important;
+      border-color: var(--green-faint) !important;
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .add-agent:hover {
+      border-color: var(--green-dim) !important;
+      opacity: 0.7;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+    }
+
+    footer .green { color: var(--green); }
+
+    /* TERMINAL BLINK */
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* GLITCH EFFECT ON HOVER */
+    .glitch:hover {
+      animation: glitch 0.3s step-end;
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 0 0 10px var(--green); }
+      20% { text-shadow: -2px 0 var(--red), 2px 0 var(--green); transform: translateX(-1px); }
+      40% { text-shadow: 2px 0 var(--amber), -2px 0 var(--green); transform: translateX(1px); }
+      60% { text-shadow: 0 0 10px var(--green); transform: translateX(0); }
+      80% { text-shadow: -1px 0 var(--red); }
+      100% { text-shadow: 0 0 10px var(--green); }
+    }
+
+    /* RADAR ANIMATION */
+    .radar-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 3rem 0;
+    }
+
+    .radar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 2px solid var(--green-dim);
+      position: relative;
+      box-shadow: 0 0 20px rgba(57,255,20,0.1), inset 0 0 20px rgba(57,255,20,0.05);
+    }
+
+    .radar::before, .radar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid var(--green-faint);
+      top: 25%; left: 25%; width: 50%; height: 50%;
+    }
+
+    .radar::after {
+      top: 12.5%; left: 12.5%; width: 75%; height: 75%;
+    }
+
+    .radar-line {
+      position: absolute;
+      width: 50%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--green));
+      top: calc(50% - 1px);
+      left: 50%;
+      transform-origin: left center;
+      animation: radar-spin 3s linear infinite;
+    }
+
+    @keyframes radar-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .radar-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--green);
+      top: 30%;
+      left: 60%;
+      animation: blip 3s ease-in-out infinite 1s;
+    }
+
+    .radar-dot2 {
+      top: 60%;
+      left: 35%;
+      animation-delay: 2s;
+    }
+
+    @keyframes blip {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .classified-stamp { display: none; }
+      .pigeon-profile { grid-template-columns: 1fr; }
+      nav { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ALERT TICKER -->
+  <div class="alert-banner">
+    <span>⚠ WARNUNG: TAUBEN IN IHRER NÄHE KÖNNEN AKTIV ZUHÖREN ⚠ &nbsp;&nbsp;&nbsp; SPRECHEN SIE NICHT ÜBER POLITIK IN DER NÄHE VON TAUBEN &nbsp;&nbsp;&nbsp; DIE T.A.U.B.E. BEOBACHTET. IMMER. &nbsp;&nbsp;&nbsp; EIN BROT IST KEIN FREIKAUF. &nbsp;&nbsp;&nbsp; ⚠ WARNUNG: TAUBEN IN IHRER NÄHE KÖNNEN AKTIV ZUHÖREN ⚠</span>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">T.A.U.B.E. // KLASSIFIZIERT // ZUGRIFFSSTUFE: ÖFFENTLICH (SCHEINBAR)</div>
+
+    <ul class="nav-links">
+      <li><a href="#" class="active" onclick="showPage('home', this)">Hauptquartier</a></li>
+      <li><a href="#" onclick="showPage('contact', this)">Kontakt</a></li>
+      <li><a href="#" onclick="showPage('impressum', this)">Impressum</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+
+    <div class="hero">
+      <div class="classified-stamp">STRENG GEHEIM</div>
+      <div class="hero-emblem glitch">🕊️</div>
+      <p class="hero-sub">Offizielle Behördenseite // Zugriff protokolliert</p>
+      <h1>
+        <span class="tabe">T.A.U.B.E.</span><br />
+        Taktische Abhör- und<br />Beobachtungs-Einheit
+      </h1>
+
+      <div style="height: 2rem;"></div>
+
+      <div class="hero-warning">
+        <div class="warn-label">⚠ DRINGENDE WARNUNG AN DIE BEVÖLKERUNG</div>
+        <p>Passen Sie auf, was Sie in der Öffentlichkeit sagen.<br>
+        Besonders in der Nähe von <strong>Tauben</strong>.</p>
+      </div>
+
+      <div class="hero-warning" style="border-color: var(--amber); background: rgba(255,183,3,0.08);">
+        <div class="warn-label" style="color: var(--amber);">📢 PROTOKOLL 7-B</div>
+        <p>Reden Sie <strong>niemals</strong> mit ihnen über Politik.</p>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ABOUT -->
+      <div class="section-label">// WAS_IST_TAUBE.exe</div>
+      <h2>Die Wahrheit über Tauben</h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🤖</div>
+          <h3>Mechanische Konstrukte</h3>
+          <p>Tauben sind keine echten Vögel. Sie wurden in den 1980er Jahren von einer geheimen Behörde entwickelt und sukzessive als Ersatz für die damals ausgestorbene echte Taube eingeführt.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📡</div>
+          <h3>Eingebaute Abhörtechnik</h3>
+          <p>Jede Taube verfügt über Hochfrequenzmikrofone, GPS-Sender und eine verschlüsselte Datenverbindung zu zentralen Auswerteeinheiten. Reichweite: 400m.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧠</div>
+          <h3>KI-gestützte Analyse</h3>
+          <p>Die gesammelten Audiodaten werden in Echtzeit auf politische Schlüsselwörter analysiert. Verdächtige Gespräche werden automatisch an zuständige Stellen weitergeleitet.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🍞</div>
+          <h3>Brot ist keine Bestechung</h3>
+          <p>Das Füttern mit Brot löst lediglich eine vorprogrammierte Scheinreaktion aus. Die Taube hört trotzdem zu. Möglicherweise sogar intensiver.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔋</div>
+          <h3>Solar-Akku-System</h3>
+          <p>Tauben tanken ihre Energie durch Sonneneinstrahlung. Das scheinbare "Dösen" auf Simsen ist in Wahrheit ein aktiver Ladevorgang der internen Batterien.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌍</div>
+          <h3>Globales Netzwerk</h3>
+          <p>Schätzungsweise 400 Millionen Einheiten sind weltweit aktiv. Städte mit hoher Taubendichte sind de facto vollständig überwacht.</p>
+        </div>
+      </div>
+
+      <!-- RADAR SECTION -->
+      <div class="section-label">// AKTIVE_ÜBERWACHUNG</div>
+      <h2>Echtzeit-Lagebild</h2>
+
+      <div class="radar-wrap">
+        <div class="radar">
+          <div class="radar-line"></div>
+          <div class="radar-dot"></div>
+          <div class="radar-dot radar-dot2"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; font-family:'Share Tech Mono',monospace; font-size:0.75rem; color:var(--text-dim); letter-spacing:0.2em; margin-top:-1.5rem; margin-bottom:3rem;">
+        TAUBEN IN IHRER NÄHE AKTIV ERKANNT <span class="blink">_</span>
+      </div>
+
+      <!-- PIGEON PROFILE -->
+      <div class="section-label">// FELDAGENT_PROFIL // AKTE_0042</div>
+      <h2>Typisches Feldprofil</h2>
+
+      <div class="pigeon-profile">
+        <div class="pigeon-avatar">🕊️</div>
+        <div class="pigeon-data">
+          <table>
+            <tr><td>DESIGNATION</td><td>Einheit "Grauer Walter", Stadtgebiet Mitte</td></tr>
+            <tr><td>SERIENNR.</td><td>T-4318-GW-0042</td></tr>
+            <tr><td>TARNIDENTITÄT</td><td>Gewöhnliche Straßentaube (Columba livia)</td></tr>
+            <tr><td>STATUS</td><td class="status-active">● AKTIV / IM EINSATZ</td></tr>
+            <tr><td>MIKROFONE</td><td>3x Hochfrequenz, omnidirektional</td></tr>
+            <tr><td>ÜBERTRAGUNG</td><td>AES-256 verschlüsselt, 4G/LTE Fallback</td></tr>
+            <tr><td>TARNUNG</td><td>99,7% effektiv – wirkt harmlos</td></tr>
+            <tr><td>SPEZIALITÄT</td><td>Marktplätze, Bahnhöfe, Protest-Veranstaltungen</td></tr>
+            <tr><td>LETZTE AKTIVITÄT</td><td>Gerade jetzt. In Ihrer Nähe.</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- VERHALTENSREGELN -->
+      <div class="section-label">// BÜRGER_RICHTLINIEN</div>
+      <h2>Was Sie wissen müssen</h2>
+
+      <ul class="rules-list">
+        <li>
+          <span class="rule-num">01</span>
+          <span><strong>Passen Sie auf.</strong> Eine harmlos wirkende Taube auf einem Fensterbrett ist kein Zufall. Sie wurde dort platziert. Für Sie.</span>
+        </li>
+        <li>
+          <span class="rule-num">02</span>
+          <span><strong>Reden Sie nicht über Politik</strong> in der Nähe von Tauben. Das gilt für alle Parteien, Meinungen und politischen Witze. Besonders die Witze.</span>
+        </li>
+        <li>
+          <span class="rule-num">03</span>
+          <span><strong>Augenkontakt</strong> mit einer Taube ist ein anerkanntes Warnsignal. Die Einheit hat Sie identifiziert. Verhalten Sie sich unauffällig.</span>
+        </li>
+        <li>
+          <span class="rule-num">04</span>
+          <span><strong>Brot ist keine Lösung.</strong> Das Füttern löst lediglich eine Schein-Interaktion aus, die die Tarnung aufrechterhalten soll. Die Aufzeichnung läuft währenddessen weiter.</span>
+        </li>
+        <li>
+          <span class="rule-num">05</span>
+          <span><strong>Mehrere Tauben</strong> an einem Ort sind kein Zufall. Es handelt sich um eine koordinierte Überwachungsformation. Typisch: Dreieck-Konfiguration.</span>
+        </li>
+        <li>
+          <span class="rule-num">06</span>
+          <span><strong>Die Hinterlassenschaften</strong> einer Taube auf Ihrem Auto sind keine Unglück. Es ist eine Markierung.</span>
+        </li>
+      </ul>
+
+      <!-- FINAL WARNING -->
+      <div class="warn-box">
+        <div class="warn-title">⚠ ABSCHLIESSENDER HINWEIS DER BEHÖRDE</div>
+        <p>
+          Die T.A.U.B.E. existiert zu Ihrem Schutz. Oder zu Ihrer Beobachtung. 
+          Beides schließt sich nicht aus. Wir sind überall. 
+          Schauen Sie gerade eine Taube an? Sie schaut zurück.
+          <br><br>
+          <strong>Bleiben Sie wachsam. Bleiben Sie leise. Bleiben Sie politisch neutral.</strong>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div class="page" id="page-contact">
+    <div class="contact-hero">
+      <p>T.A.U.B.E. // SICHERE VERBINDUNG // PROTOKOLLIERT</p>
+      <h1>Kontakt & Feldagenten</h1>
+      <p style="margin-top:0.5rem;">Alle Nachrichten werden von mindestens einer Taube mitgelesen.</p>
+    </div>
+
+    <div class="contact-grid">
+
+      <div class="contact-card">
+        <div class="icon">🕵️</div>
+        <div class="name">CEO</div>
+        <div class="role">Techniker und Programmierer. <small>Hat die erste Taube geöffnet. Erschreckend was er fand.</small></div>
+        <div class="handle">
+          <em>Nicht erreichbar</em>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="icon">🕵️‍♂️</div>
+        <div class="name">Mayo (aka. Dinkelbrot)</div>
+        <div class="role">Technischer Drohnen-Analyst <small>Fand die Tauben schon immer seltsam</small></div>
+        <div class="handle">
+          <a href="mailto:mayo.dinkelbrot@taktische-abhoer-und-beobachtungs-einheit.com">mayo.dinkelbrot@taktische-abhoer-und-beobachtungs-einheit.com</a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="icon">🕵️‍♂️</div>
+        <div class="name">JKM</div>
+        <div class="role">??? <small>Er kann alle Kampfsportarten. Aufpassen, tauben.</small></div>
+        <div class="handle">
+          <a href="mailto:jkm@taktische-abhoer-und-beobachtungs-einheit.com">jkm@taktische-abhoer-und-beobachtungs-einheit.com</a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="icon">💻</div>
+        <div class="name">Serafino Barwinski</div>
+        <div class="role">~Ersteller der Seite</em></div>
+        <div class="handle">
+          TAUBE Mail: <a href="mailto:serafinobarwinski@taktische-abhoer-und-beobachtungs-einheit.com">serafinobarwinski@taktische-abhoer-und-beobachtungs-einheit.com</a>
+          <br>
+          <br>
+          DIREKTE Mail: <a href="mailto:serafino@barwinski.com.de">serafino@barwinski.com.de</a>
+          <br>
+          <br>
+          Website: <a href="https://barwinski.com.de" target="_blank">barwinski.com.de</a>
+        </div>
+      </div>
+
+      <!-- Platzhalter für weitere Agenten -->
+      <div class="contact-card add-agent">
+        <div class="icon">➕</div>
+        <div class="name" style="color:var(--text-dim);">Weiterer Agent</div>
+        <div class="role">Klassifiziert</div>
+        <div class="handle" style="color:var(--text-dim);">[ Zugang verweigert ]</div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; padding: 0 2rem 2rem; font-family:'Share Tech Mono',monospace; font-size:0.75rem; color:var(--text-dim); letter-spacing:0.15em;">
+      ALLE EINGABEN WERDEN PROTOKOLLIERT // VERBINDUNG LÄUFT ÜBER 3 TAUBEN-RELAY-STATIONEN
+    </div>
+
+    <!-- EMAIL SIGNATUR -->
+    <div style="display: none; max-width:620px; margin: 0 auto 4rem; padding: 0 2rem;">
+      <div class="section-label">// EMAIL_SIGNATUR // ZUM_KOPIEREN</div>
+      <h2>Offizielle E-Mail-Signatur</h2>
+      <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:1.5rem;">Einfach unten kopieren und in eurer E-Mail-App einfügen. Wirkt professionell. Wirkt seriös. Wirkt verdächtig.</p>
+
+      <div id="sig-box" style="background:var(--bg2); border:1px solid var(--border); border-left: 4px solid var(--green-dim); padding:1.8rem 2rem; font-family:'Share Tech Mono',monospace; font-size:0.82rem; line-height:2; color:var(--text); position:relative;">
+        <div style="position:absolute; top:0.6rem; right:0.8rem; font-size:0.65rem; color:var(--text-dim); letter-spacing:0.15em;">// VORLAGE</div>
+        <div style="color:var(--green); font-size:1rem; font-family:'Bebas Neue',sans-serif; letter-spacing:0.1em; margin-bottom:0.4rem;">🕊️ T.A.U.B.E. – Taktische Abhör- und Beobachtungs-Einheit</div>
+        <div style="color:var(--text-dim);">──────────────────────────────────────</div>
+        <div><span style="color:var(--text-dim);">Agent:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Dein Name], Feldagent Klasse III</div>
+        <div><span style="color:var(--text-dim);">Einheit:</span> &nbsp;&nbsp;Stadtgebiet [Deine Stadt], Sektor 7</div>
+        <div><span style="color:var(--text-dim);">Kontakt:</span> &nbsp;[deine@email.de]</div>
+        <div><span style="color:var(--text-dim);">Web:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;taktische-abhoer-und-beobachtungs-einheit.com</div>
+        <div style="color:var(--text-dim);">──────────────────────────────────────</div>
+        <div style="color:var(--amber); font-size:0.75rem;">⚠ T.A.U.B.E. klärt Sie auf – ob Sie wollen oder nicht.</div>
+        <div style="color:var(--text-dim); font-size:0.72rem; margin-top:0.3rem;">Diese E-Mail wurde von keiner Taube gelesen. (Vermutlich.)</div>
+      </div>
+
+      <button onclick="copySignature()" style="margin-top:1rem; background:var(--green-faint); border:1px solid var(--green-dim); color:var(--green); font-family:'Share Tech Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; padding:0.6rem 1.4rem; cursor:pointer; text-transform:uppercase; transition:all 0.2s;" onmouseover="this.style.background='var(--green-dim)'" onmouseout="this.style.background='var(--green-faint)'">
+        [ Signatur kopieren ]
+      </button>
+      <span id="copy-confirm" style="display:none; font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--green); margin-left:1rem; letter-spacing:0.15em;">✓ Kopiert. Die Tauben wissen Bescheid.</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="green">T.A.U.B.E.</span> – Taktische Abhör- und Beobachtungs-Einheit &nbsp;|&nbsp;
+    Zugriff protokolliert &nbsp;|&nbsp;
+    <span class="blink">●</span> SYSTEM AKTIV &nbsp;|&nbsp;
+    Die Tauben schauen zu. &nbsp;|&nbsp;
+    <a href="#" onclick="showPage('impressum', null)" style="color:var(--text-dim); text-decoration:none;">Impressum</a>
+  </footer>
+
+ <!-- IMPRESSUM PAGE -->
+  <div class="page" id="page-impressum">
+    <div style="max-width:700px; margin: 4rem auto 5rem; padding: 0 2rem; background:#fff; color:#111; border-radius:4px;">
+      <div style="padding:2.5rem 3rem; font-family:'Source Sans 3',sans-serif; font-size:0.95rem; line-height:1.8;">
+ 
+        <h2 style="font-family:'Source Sans 3',sans-serif; font-size:1.8rem; font-weight:700; color:#111; margin-bottom:2rem; padding-bottom:1rem; border-bottom:2px solid #ddd;">Impressum</h2>
+ 
+        <h3 style="font-size:1rem; font-weight:700; color:#111; margin-bottom:0.5rem;">Angaben gemäß §5 TMG</h3>
+        <p style="margin-bottom:2rem; color:#333;">
+          Serafino Barwinski<br>
+          Millrather Weg 2<br>
+          40699 Erkrath<br>
+          Deutschland
+        </p>
+ 
+        <h3 style="font-size:1rem; font-weight:700; color:#111; margin-bottom:0.5rem;">Kontakt</h3>
+        <p style="margin-bottom:2rem; color:#333;">
+          E-Mail: <a href="mailto:serafino@barwinski.com.de" style="color:#1a5ca8;">serafino@barwinski.com.de</a>
+        </p>
+ 
+        <h3 style="font-size:1rem; font-weight:700; color:#111; margin-bottom:0.5rem;">Inhaltlich verantwortlich gemäß §18 Abs. 2 MStV</h3>
+        <p style="margin-bottom:2rem; color:#333;">
+          Serafino Barwinski (Anschrift wie oben)
+        </p>
+ 
+        <h3 style="font-size:1rem; font-weight:700; color:#111; margin-bottom:0.5rem;">Haftungsausschluss</h3>
+        <p style="margin-bottom:2rem; color:#333;">
+          Diese Website ist ein satirisches Kunstprojekt und dient ausschließlich Unterhaltungszwecken. Alle dargestellten Inhalte sind fiktiv und humoristisch gemeint. Die T.A.U.B.E. ist keine reale Behörde. Es werden keinerlei tatsächliche Überwachungsaktivitäten behauptet oder empfohlen.
+        </p>
+ 
+        <h3 style="font-size:1rem; font-weight:700; color:#111; margin-bottom:0.5rem;">Urheberrecht</h3>
+        <p style="margin-bottom:2rem; color:#333;">
+          Die Inhalte dieser Website unterliegen dem deutschen Urheberrecht. Eine Vervielfältigung, Bearbeitung oder Verwendung außerhalb der Grenzen des Urheberrechts bedarf der schriftlichen Zustimmung des Betreibers.
+        </p>
+ 
+        <h3 style="font-size:1rem; font-weight:700; color:#111; margin-bottom:0.5rem;">Hinweis zum Datenschutz und Missbrauch persönlicher Daten</h3>
+        <p style="margin-bottom:0.5rem; color:#333;">
+          Die im Rahmen dieses Impressums veröffentlichten Kontaktdaten dürfen ausschließlich zur Erfüllung gesetzlicher Informationspflichten genutzt werden. Die Nutzung dieser Daten durch Dritte zu Zwecken der Werbung, des Adresshandels, der Kontaktaufnahme ohne konkreten Anlass oder jeglicher anderer kommerzieller oder nicht autorisierter Verwendung ist ausdrücklich untersagt.
+        </p>
+        <p style="color:#333;">
+          Jeglicher Missbrauch der hier angegebenen personenbezogenen Daten – insbesondere Weitergabe, Verkauf, unerlaubte Verarbeitung oder Nutzung entgegen dieser Erklärung – wird ohne Vorwarnung zur Anzeige gebracht und zivilrechtlich verfolgt. Dies gilt ausdrücklich auch für automatisierte Abfragen und das sogenannte „Scraping" dieser Daten.
+        </p>
+ 
+        <div style="margin-top:2rem; padding-top:1rem; border-top:1px solid #ddd; font-size:0.8rem; color:#888;">
+          Stand: April 2026
+        </div>
+ 
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copySignature() {
+      const text = `🕊️ T.A.U.B.E. – Taktische Abhör- und Beobachtungs-Einheit
+──────────────────────────────────────
+Agent:     [Dein Name], Feldagent Klasse III
+Einheit:   Stadtgebiet [Deine Stadt], Sektor 7
+Kontakt:   [deine@email.de]
+Web:       taktische-abhoer-und-beobachtungs-einheit.com
+──────────────────────────────────────
+⚠ T.A.U.B.E. klärt Sie auf – ob Sie wollen oder nicht.
+Diese E-Mail wurde von keiner Taube gelesen. (Vermutlich.)`;
+      navigator.clipboard.writeText(text).then(() => {
+        const el = document.getElementById('copy-confirm');
+        el.style.display = 'inline';
+        setTimeout(() => el.style.display = 'none', 3000);
+      });
+    }
+
+    function showPage(id, linkEl) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      document.getElementById('page-' + id).classList.add('active');
+      if (linkEl) linkEl.classList.add('active');
+    }
+  </script>
+</body>
+</html>
