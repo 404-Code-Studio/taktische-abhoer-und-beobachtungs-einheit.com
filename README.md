@@ -30,7 +30,7 @@ Eine Seite. Ein Meme. Eine Domain, die so lang ist, dass sie niemand tippen kann
 
 | Position | Email |
 |----------|-------|
-| **CEO & Programmer** | `ceo@taktische-abhoer-und-beobachtungs-einheit.com` |
+| **Serafino Programmer** | `serafinobarwinski@taktische-abhoer-und-beobachtungs-einheit.com` |
 | **CO-Programmer & Bread Lover** | `dinkelbrot@taktische-abhoer-und-beobachtungs-einheit.com` |
 | **???** | `jkm@taktische-abhoer-und-beobachtungs-einheit.com` |
 
