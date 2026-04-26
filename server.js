@@ -14,7 +14,6 @@ const __dirname = path.dirname(__filename);
 
 const CACHE_DIR = "./font-cache";
 const CACHE_TTL_MS = 14 * 24 * 60 * 60 * 1000;
-const ROUTES_FILE = path.join(__dirname, "routes.json");
 
 const ALLOWED_FONTS = new Set([
   "share+tech+mono",
@@ -22,7 +21,6 @@ const ALLOWED_FONTS = new Set([
   "source+sans+3",
 ]);
 
-const ROUTES = JSON.parse(await fs.readFile(ROUTES_FILE, "utf8"));
 await fs.mkdir(CACHE_DIR, { recursive: true });
 
 function cachePath(url) {
@@ -147,54 +145,6 @@ app.use(helmet({
     includeSubDomains: true,
   },
 }));
-
-app.use(express.static(path.join(__dirname, "public")));
-
-function getSitemapRoutes() {
-  return Object.entries(ROUTES)
-    .filter(([, file]) => file.endsWith('.html'))
-    .map(([route, file]) => {
-      if (route === '/index.html') return '/';
-      return route;
-    });
-}
-
-async function formatSitemapXml(req) {
-  const host = req.get('host');
-  const protocol = req.protocol || 'https';
-  const baseUrl = `${protocol}://${host}`;
-  const routes = getSitemapRoutes();
-
-  const entries = await Promise.all(routes.map(async (route) => {
-    const normalizedRoute = route === '/' ? '' : route;
-    const filePath = path.join(__dirname, ROUTES[route === '/' ? '/index.html' : route]);
-    let lastmod = '';
-    try {
-      const stat = await fs.stat(filePath);
-      lastmod = stat.mtime.toISOString();
-    } catch (err) {
-      lastmod = '';
-    }
-
-    return `  <url>\n    <loc>${baseUrl}${normalizedRoute}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''}\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`;
-  }));
-
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>`;
-}
-
-app.get('/sitemap.xml', async (req, res) => {
-  res.set('Content-Type', 'application/xml');
-  res.set('Cache-Control', `public, max-age=${CACHE_TTL_MS / 1000}`);
-  res.send(await formatSitemapXml(req));
-});
-
-app.get('*', (req, res, next) => {
-  const mapped = ROUTES[req.path];
-  if (mapped && mapped.endsWith('.html')) {
-    return res.sendFile(path.join(__dirname, mapped));
-  }
-  next();
-});
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));

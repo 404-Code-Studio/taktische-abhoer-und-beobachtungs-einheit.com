@@ -9,7 +9,7 @@
 
 ---
 
-## 🎯 Worum geht's?
+## Worum geht's?
 
 Eine Seite. Ein Meme. Eine Domain, die so lang ist, dass sie niemand tippen kann.
 
@@ -17,12 +17,12 @@ Eine Seite. Ein Meme. Eine Domain, die so lang ist, dass sie niemand tippen kann
 
 ---
 
-## ✨ Features
+## Features
 
-- ✅ Extrem lange E-Mail-Adressen (Copy-Paste only)
-- ✅ Absolutes Chaos beim Vorlesen
-- ✅ Perfekt für Signaturen, die Leute konfus machen
-- ✅ Taube-Meme auf Regierungsebene
+- Extrem lange E-Mail-Adressen (Copy-Paste only)
+- Absolutes Chaos beim Vorlesen
+- Perfekt für Signaturen, die Leute konfus machen
+- Taube-Meme auf Regierungsebene
 
 ---
 
@@ -38,7 +38,7 @@ Eine Seite. Ein Meme. Eine Domain, die so lang ist, dass sie niemand tippen kann
 
 ---
 
-## 🕊️ Die Geschichte
+## Die Geschichte
 
 Irgendwann dachte jemand: "Was wäre das größte deutsche Wortspiel?"
 
@@ -48,7 +48,7 @@ Boom. **Taube.**
 
 ---
 
-## 💀 Warum das Meme?
+## Warum das Meme?
 
 1. Tauben wurden tatsächlich als Spione eingesetzt (Geschichte!)
 2. "Birds aren't real" - Tauben sind Drohnen
@@ -57,21 +57,18 @@ Boom. **Taube.**
 
 ---
 
-## 📧 E-Mail Fun Facts
+## E-Mail Fun Facts
 
-- **Länge beim Tippen:** ~2 Minuten
+- **Länge beim Tippen:** ~1 Minute
 - **Typos:** Garantiert
-- **Chance, dass es jemand richtig schreibt:** 0%
-- **Viralität beim Vorlesen:** 100%
+- **Chance, dass es jemand richtig schreibt:** 10%
 
 ---
 
-## 🚀 Was kommt noch?
+## Was kommt noch?
 
 Wer weiß. Vielleicht:
-- Offizielle "Taube"-Memos
 - Satirische "Regierungsdokumente"
-- Ein Podcast namens "Abhörgespräche"
 - Sticker mit der Domain
 
 *Die Möglichkeiten sind endlos. Die Domain auch.*
